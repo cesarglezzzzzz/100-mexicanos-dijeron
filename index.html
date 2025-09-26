@@ -1,84 +1,112 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>100 Mexicanos Dijeron</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>100 Mexicanos Dijeron - Versión Mexicana</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div class="game-container">
+  <div class="game-container">
 
-        <!-- PANTALLA DE BIENVENIDA -->
-        <div id="welcome-screen" class="screen active">
-            <h2>Bienvenidos a 100 Mexicanos Dijeron</h2>
-            <form id="setup-form">
-                <div class="input-group">
-                    <label for="team1-name">Equipo 1:</label>
-                    <input type="text" id="team1-name" placeholder="Nombre del equipo 1">
-                </div>
-                <div class="input-group">
-                    <label for="team2-name">Equipo 2:</label>
-                    <input type="text" id="team2-name" placeholder="Nombre del equipo 2">
-                </div>
-                <button type="submit" class="start-btn">¡Comenzar!</button>
-            </form>
+    <!-- Pantalla de inicio -->
+    <div id="welcome-screen" class="screen active">
+      <h2>🇲🇽 100 Mexicanos Dijeron 🎉</h2>
+      <form id="setup-form">
+        <div class="team-setup">
+          <h3>Equipo 1</h3>
+          <input type="text" id="team1-name" placeholder="Nombre del equipo 1" required />
+          <div class="players">
+            <input type="text" placeholder="Jugador 1" class="team1-player" />
+            <input type="text" placeholder="Jugador 2" class="team1-player" />
+            <input type="text" placeholder="Jugador 3" class="team1-player" />
+            <input type="text" placeholder="Jugador 4" class="team1-player" />
+          </div>
         </div>
 
-        <!-- PANTALLA DE JUEGO -->
-        <div id="game-screen" class="screen">
-            <div class="game-header">
-                <div class="score-panel">
-                    <h3 id="team1-name-display">Equipo 1</h3>
-                    <div class="score-value" id="score-team-1">0</div>
-                </div>
-                <div class="turn-indicator">
-                    Turno de: <span id="current-team-name">Equipo</span>
-                </div>
-                <div class="score-panel">
-                    <h3 id="team2-name-display">Equipo 2</h3>
-                    <div class="score-value" id="score-team-2">0</div>
-                </div>
-            </div>
-
-            <div class="game-area">
-                <div class="question-display">
-                    <h4 id="current-question">Pregunta aparecerá aquí</h4>
-                </div>
-
-                <div class="answers-container" id="answers-list">
-                    <!-- Respuestas ocultas se renderizan aquí -->
-                </div>
-
-                <div class="input-area">
-                    <input type="text" id="answer-input" placeholder="Escribe tu respuesta">
-                    <button id="submit-answer-btn">Responder</button>
-                </div>
-
-                <div class="control-panel">
-                    <button id="next-round-btn" style="display:none;">Siguiente Ronda</button>
-                </div>
-            </div>
+        <div class="team-setup">
+          <h3>Equipo 2</h3>
+          <input type="text" id="team2-name" placeholder="Nombre del equipo 2" required />
+          <div class="players">
+            <input type="text" placeholder="Jugador 1" class="team2-player" />
+            <input type="text" placeholder="Jugador 2" class="team2-player" />
+            <input type="text" placeholder="Jugador 3" class="team2-player" />
+            <input type="text" placeholder="Jugador 4" class="team2-player" />
+          </div>
         </div>
 
-        <!-- MODAL DE ROBO -->
-        <div id="steal-modal" class="modal">
-            <div class="modal-content">
-                <p id="steal-message"></p>
-                <input id="steal-input" type="text" placeholder="Ingresa la respuesta restante">
-                <button id="steal-submit-btn">Robo</button>
-            </div>
-        </div>
-
-        <!-- PANTALLA FINAL -->
-        <div id="end-screen" class="screen">
-            <h2 id="winner-message">Ganador</h2>
-            <p id="final-score"></p>
-            <button id="restart-btn">Reiniciar Juego</button>
-        </div>
-
+        <button type="submit" class="start-btn">¡Comenzar!</button>
+      </form>
+      <p class="hint">Tip: puedes escribir o hacer click en las respuestas para revelarlas.</p>
     </div>
 
-    <script type="module" src="js/game.js"></script>
+    <!-- Pantalla de juego -->
+    <div id="game-screen" class="screen">
+      <div class="game-header">
+        <div class="score-panel left-panel">
+          <h3 id="team1-name-display"></h3>
+          <div id="team1-players-display" class="players-list"></div>
+          <div id="score-team-1" class="score-value">0</div>
+        </div>
+
+        <div class="center-panel">
+          <div class="turn-indicator">Turno de: <span id="current-team-name"></span></div>
+          <div class="current-player">Responde: <strong id="current-player-name"></strong></div>
+        </div>
+
+        <div class="score-panel right-panel">
+          <h3 id="team2-name-display"></h3>
+          <div id="team2-players-display" class="players-list"></div>
+          <div id="score-team-2" class="score-value">0</div>
+        </div>
+      </div>
+
+      <div class="game-area">
+        <div class="question-display">
+          <h4 id="current-question"></h4>
+        </div>
+
+        <div id="answers-list" class="answers-container"></div>
+
+        <div class="input-area">
+          <input type="text" id="answer-input" placeholder="Escribe tu respuesta..." autocomplete="off" />
+          <button id="submit-answer-btn">Responder</button>
+        </div>
+
+        <div class="controls">
+          <button id="next-round-btn" style="display:none;">Siguiente Ronda</button>
+          <button id="restart-btn" style="display:none;">Reiniciar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pantalla final -->
+    <div id="end-screen" class="screen">
+      <h2 id="winner-message"></h2>
+      <p id="final-score"></p>
+      <button id="restart-btn-final">Reiniciar</button>
+    </div>
+  </div>
+
+  <!-- Modal de robo -->
+  <div id="steal-modal" class="modal">
+    <div class="modal-content">
+      <p id="steal-message"></p>
+      <input type="text" id="steal-input" placeholder="Escribe tu respuesta..." />
+      <div style="margin-top:10px;">
+        <button id="steal-submit-btn">Robar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sonidos (opcionales: coloca correct.mp3 & wrong.mp3 en la carpeta si quieres) -->
+  <audio id="correct-sound" src="correct.mp3"></audio>
+  <audio id="wrong-sound" src="wrong.mp3"></audio>
+
+  <!-- confetti lightweight (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script type="module" src="game.js"></script>
 </body>
 </html>
+
